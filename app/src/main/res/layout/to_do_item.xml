@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+             <variable
+                 name="item"
+                 type="com.e.tdm1.data.ToDoItem" />
+        <variable
+            name="viewModel"
+            type="com.e.tdm1.ui.ToDoListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="0.7"
+            android:layout_marginStart="20dp"
+            android:text="i have to finish my home wokr"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:onClick="@{() -> viewModel.deleteItem(1)}"
+            android:src="@drawable/ic_check_box_outline_blank_black_24dp"/>
+
+
+
+    </LinearLayout>
+</layout>
