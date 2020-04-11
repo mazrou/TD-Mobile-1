@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TDM1</string>
+     <string-array name="nim">
+         <item>idsf</item>
+     </string-array>
+
+
+
 </resources>

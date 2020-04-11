@@ -1,24 +1,25 @@
 package com.e.tdm1.ui
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.webkit.RenderProcessGoneDetail
 import android.widget.AdapterView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+
+import android.widget.ArrayAdapter
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.e.tdm1.R
+
 import com.e.tdm1.data.ToDoItem
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.to_do_item.*
-import kotlinx.android.synthetic.main.to_do_list_fragment.*
+
 import kotlinx.android.synthetic.main.to_do_list_fragment.to_do_list
 
 class MainActivity : AppCompatActivity() , View.OnClickListener  ,
-    ToDoListAdapter.OnNoteListner {
+    ToDoListAdapter.OnNoteListner ,
+    AdapterView.OnItemSelectedListener{
 
     private lateinit var todoList: ArrayList<ToDoItem>
 
@@ -28,23 +29,43 @@ class MainActivity : AppCompatActivity() , View.OnClickListener  ,
         setContentView(R.layout.activity_main)
 
         createToDoList()
+
+
+        if(isTablet(this)){
+
+            var sppinerAdapet : ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this, R.array.nim, android.R.layout.simple_spinner_item)
+            sppinerAdapet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            combobox.adapter = sppinerAdapet
+            combobox.onItemSelectedListener = this
+        }
+
         to_do_list.also {
             it.layoutManager = LinearLayoutManager(this as Context)
             it.setHasFixedSize(true)
             it.adapter = ToDoListAdapter(todoList , this , this)
         }
 
-
-
-
-
-
-
         add_btn.setOnClickListener (this)
 
     }
 
 
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
+
+    
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val text : String  =parent!!.getItemAtPosition(position).toString()
+
+    }
+
+    private fun isTablet(context: Context):Boolean
+    {
+        return ((context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE)
+    }
 
     override fun onClick(v: View?) {
         when( v!!.id){
@@ -88,6 +109,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener  ,
         to_do_list.adapter!!.notifyDataSetChanged()
 
     }
+
 
 
 }
